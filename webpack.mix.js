@@ -17,4 +17,5 @@ mix.js('resources/js/app.js', 'public/js')
             quietDeps: true,
         },
     })
+    .sourceMaps()
     .version();
