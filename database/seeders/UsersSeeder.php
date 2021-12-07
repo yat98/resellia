@@ -26,6 +26,6 @@ class UsersSeeder extends Seeder
 			'role' => 'customer',
 		]);
 
-		$this->command->info('Success add 2 users');
+		$this->command->info('Success add users');
 	}
 }
