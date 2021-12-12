@@ -30,7 +30,25 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if (auth()->check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
+                            </li>
+                            @can('admin-access')
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownManage" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownManage">
+                                        <a class="dropdown-item" href="{{ route('categories.index') }}">
+                                            <i class="fas fa-tags"></i>
+                                            Categories
+                                        </a>
+                                    </div>
+                                </li>
+                            @endcan
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -56,8 +74,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                         document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -73,7 +91,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 mt-3">
             @yield('content')
         </main>
     </div>
