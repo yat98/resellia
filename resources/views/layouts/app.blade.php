@@ -90,8 +90,15 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4 mt-3">
+            @if (flash()->message)
+                <div class="container">
+                    <div class="alert {{ flash()->class }} alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ flash()->message }}
+                    </div>
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>

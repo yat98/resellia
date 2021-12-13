@@ -4,7 +4,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3>Category</h3>
+                <h3>
+                    Category
+                    <small>
+                        <a href="{{ route('categories.create') }}" class="btn btn-warning btn-sm btn-icon ml-2">
+                            <i class="fas fa-tags"></i>
+                            New Category
+                        </a>
+                    </small>
+                </h3>
                 {{ Form::open(['route' => 'categories.index', 'method' => 'GET']) }}
                 <div class="form-group mr-1 my-4">
                     {{ Form::text('q', request()->q, ['id' => 'q', 'class' => 'form-control ' . ($errors->has('q') ? 'is-invalid' : ''), 'placeholder' => 'Type category...']) }}
@@ -14,8 +22,8 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <td>Title</td>
-                            <td>Parent</td>
+                            <th>Title</th>
+                            <th>Parent</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,7 +34,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td rowspan="2">Data Kosong</td>
+                                <td colspan="2" class="text-center">Data Kosong</td>
                             </tr>
                         @endforelse
                     </tbody>
