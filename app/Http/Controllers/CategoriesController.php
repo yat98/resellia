@@ -41,10 +41,21 @@ class CategoriesController extends Controller
 
 	public function edit(Category $category)
 	{
+		$parents = ['' => ''] + Category::pluck('title', 'id')->toArray();
+
+		return view('categories.edit', compact('category', 'parents'));
 	}
 
 	public function update(Request $request, Category $category)
 	{
+		$this->validate($request, [
+			'title' => 'required|string|max:255|unique:categories,title,' . $category->id,
+			'parent_id' => 'exists:categories,id',
+		]);
+		$category->update($request->all());
+		flash()->success($request->title . ' category updated.');
+
+		return redirect()->route('categories.index');
 	}
 
 	public function destroy(Category $category)

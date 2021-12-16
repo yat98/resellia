@@ -9,5 +9,5 @@
     {!! $errors->first('parent_id', '<div id="parent_id" class="invalid-feedback">:message</div>') !!}
 </div>
 <div class="form-group">
-    {{ Form::submit(isset($model) ? 'Update' : 'Save', ['class' => 'btn btn-primary']) }}
+    {{ Form::submit(isset($category) ? 'Update' : 'Save', ['class' => 'btn btn-primary']) }}
 </div>

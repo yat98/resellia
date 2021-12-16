@@ -24,6 +24,7 @@
                         <tr>
                             <th>Title</th>
                             <th>Parent</th>
+                            <th> </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,6 +32,9 @@
                             <tr>
                                 <td>{{ $category->title }}</td>
                                 <td>{{ $category->parent ? $category->parent->title : '' }}</td>
+                                <td>
+                                    <a href="{{ route('categories.edit', $category) }}">Edit</a>
+                                </td>
                             </tr>
                         @empty
                             <tr>
