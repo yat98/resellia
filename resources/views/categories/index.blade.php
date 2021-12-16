@@ -33,7 +33,10 @@
                                 <td>{{ $category->title }}</td>
                                 <td>{{ $category->parent ? $category->parent->title : '' }}</td>
                                 <td>
-                                    <a href="{{ route('categories.edit', $category) }}">Edit</a>
+                                    {{ Form::model($category, ['route' => ['categories.destroy', $category], 'method' => 'DELETE']) }}
+                                    <a href="{{ route('categories.edit', $category) }}">Edit</a> |
+                                    {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-danger js-submit-confirm']) }}
+                                    {{ Form::close() }}
                                 </td>
                             </tr>
                         @empty

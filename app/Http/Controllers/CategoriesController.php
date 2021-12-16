@@ -31,7 +31,7 @@ class CategoriesController extends Controller
 	{
 		$this->validate($request, [
 			'title' => 'required|string|max:255|unique:categories',
-			'parent_id' => 'exists:categories,id',
+			'parent_id' => 'nullable|exists:categories,id',
 		]);
 		Category::create($request->all());
 		flash()->success($request->title . ' category saved.');
@@ -50,7 +50,7 @@ class CategoriesController extends Controller
 	{
 		$this->validate($request, [
 			'title' => 'required|string|max:255|unique:categories,title,' . $category->id,
-			'parent_id' => 'exists:categories,id',
+			'parent_id' => 'nullable|exists:categories,id',
 		]);
 		$category->update($request->all());
 		flash()->success($request->title . ' category updated.');
@@ -60,5 +60,9 @@ class CategoriesController extends Controller
 
 	public function destroy(Category $category)
 	{
+		flash()->success($category->title . ' category deleted.');
+		$category->delete();
+
+		return redirect()->route('categories.index');
 	}
 }
