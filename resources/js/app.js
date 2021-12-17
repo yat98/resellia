@@ -7,7 +7,12 @@ require('bootstrap');
 require('sweetalert2');
 import Swal from 'sweetalert2'
 
+// Selectize
+require('selectize');
+
+// Main
 $(function () {
+    // Delete Alert
     $(document.body).on('click', '.js-submit-confirm', function (e) {
         e.preventDefault();
         let el = $(this);
@@ -28,4 +33,14 @@ $(function () {
             }
         })
     });
+
+    // Selectize
+    $('.js-selectize').selectize({
+        sortField: 'text',
+    });
+
+    $('#custom-file-upload').on('change', function (e) {
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    })
 });

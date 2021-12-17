@@ -16,10 +16,6 @@ class CategoriesController extends Controller
 		return view('categories.index', compact('categories'));
 	}
 
-	public function show(Category $category)
-	{
-	}
-
 	public function create()
 	{
 		$parents = ['' => ''] + Category::pluck('title', 'id')->toArray();

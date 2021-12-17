@@ -45,6 +45,10 @@
                                             <i class="fas fa-tags"></i>
                                             Categories
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('products.index') }}">
+                                            <i class="fas fa-gift"></i>
+                                            Products
+                                        </a>
                                     </div>
                                 </li>
                             @endcan
