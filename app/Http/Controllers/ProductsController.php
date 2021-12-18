@@ -30,18 +30,16 @@ class ProductsController extends Controller
 		$this->validate($request, [
 			'name' => 'required|unique:products',
 			'model' => 'required',
-			'photo' => 'mimes:jpeg,png|max:10240',
+			'photo' => 'required|mimes:jpeg,png|max:10240',
 			'price' => 'required|numeric|min:1000',
 		]);
 		$data = $request->only('name', 'price', 'model');
-
 		if ($request->hasFile('photo')) {
-			$data['photo'] = $request->file('photo')->store('public/products');
+			$data['photo'] = $this->uploadFile($request, 'photo', '/public/products');
 		}
-
 		$product = Product::create($data);
 		$product->categories()->sync($request->categories);
-		flash()->success($request->title . ' product saved.');
+		flash()->success($request->name . ' product saved.');
 
 		return redirect()->route('products.index');
 	}
@@ -50,25 +48,42 @@ class ProductsController extends Controller
 	{
 		$categories = Category::pluck('title', 'id')->toArray();
 
-		return view('categories.edit', compact('product', 'categories'));
+		return view('products.edit', compact('product', 'categories'));
 	}
 
 	public function update(Request $request, Product $product)
 	{
 		$this->validate($request, [
-			'title' => 'required|string|max:255|unique:categories,title,' . $product->id,
-			'parent_id' => 'nullable|exists:categories,id',
+			'name' => 'required|unique:products,name,' . $product->id,
+			'model' => 'required',
+			'photo' => 'sometimes|mimes:jpeg,png|max:10240',
+			'price' => 'required|numeric|min:1000',
 		]);
-		$product->update($request->all());
-		flash()->success($request->title . ' product updated.');
+		$data = $request->only('name', 'price', 'model');
+		if ($request->hasFile('photo')) {
+			$data['photo'] = $this->uploadFile($request, 'photo', '/public/products');
+			if ('' != $product->photo) {
+				$this->deleteFile('/products/' . $product->photo);
+			}
+		}
+		$product->update($data);
+		if (null != $request->categories) {
+			$product->categories()->sync($request->categories);
+		} else {
+			$product->categories()->detach();
+		}
+		flash()->success($request->name . ' product updated.');
 
 		return redirect()->route('products.index');
 	}
 
 	public function destroy(Product $product)
 	{
-		flash()->success($product->title . ' product deleted.');
 		$product->delete();
+		if ('' != $product->photo) {
+			$this->deleteFile('/products/' . $product->photo);
+		}
+		flash()->success($product->name . ' product deleted.');
 
 		return redirect()->route('products.index');
 	}

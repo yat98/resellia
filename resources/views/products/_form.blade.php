@@ -21,11 +21,19 @@
 <div class="form-group">
     {{ Form::label('photo', 'Photo (jpeg, png)') }}
     <div class="custom-file">
-        {{ Form::file('photo', ['id' => 'custom-file-upload', 'class' => 'custom-file-input ' . ($errors->has('categories') ? 'is-invalid' : '')]) }}
+        {{ Form::file('photo', ['id' => 'custom-file-upload', 'class' => 'custom-file-input ' . ($errors->has('photo') ? 'is-invalid' : '')]) }}
         {{ Form::label('custom-file-upload', 'Pilih file', ['class' => 'custom-file-label']) }}
         {!! $errors->first('photo', '<div id="categories" class="invalid-feedback">:message</div>') !!}
     </div>
 </div>
+@if (isset($product) && !empty($product->photo))
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <p>Current photo:</p>
+            <img src="{{ asset('/storage/products/' . $product->photo) }}" class="img-thumbnail rounded">
+        </div>
+    </div>
+@endif
 <div class="form-group">
-    {{ Form::submit(isset($category) ? 'Update' : 'Save', ['class' => 'btn btn-primary']) }}
+    {{ Form::submit(isset($product) ? 'Update' : 'Save', ['class' => 'btn btn-primary']) }}
 </div>

@@ -14,6 +14,19 @@ class Category extends Model
 		'parent_id',
 	];
 
+	public static function boot()
+	{
+		parent::boot();
+		static::deleting(function ($model) {
+			$model->products()->detach();
+			foreach ($model->childs as $child) {
+				$child->update([
+					'parent_id' => '',
+				]);
+			}
+		});
+	}
+
 	public function childs()
 	{
 		return $this->hasMany(Category::class, 'parent_id');

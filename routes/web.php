@@ -27,8 +27,8 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function ($route) {
 	$route->group(['middleware' => 'role:admin'], function ($route) {
 		$route->resource('categories', CategoriesController::class, ['names' => 'categories'])
-			->except('show');
+			->except(['show']);
 		$route->resource('products', ProductsController::class, ['names' => 'products'])
-			->except('show');
+			->except(['show']);
 	});
 });

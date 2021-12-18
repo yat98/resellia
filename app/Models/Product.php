@@ -20,4 +20,12 @@ class Product extends Model
 	{
 		return $this->belongsToMany(Category::class);
 	}
+
+	public static function boot()
+	{
+		parent::boot();
+		static::deleting(function ($model) {
+			$model->categories()->detach();
+		});
+	}
 }

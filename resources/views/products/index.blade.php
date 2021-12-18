@@ -24,7 +24,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Model</th>
-                            <th>Price</th>
+                            <th>Category</th>
                             <th> </th>
                         </tr>
                     </thead>
