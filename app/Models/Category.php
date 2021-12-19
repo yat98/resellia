@@ -21,7 +21,7 @@ class Category extends Model
 			$model->products()->detach();
 			foreach ($model->childs as $child) {
 				$child->update([
-					'parent_id' => '',
+					'parent_id' => null,
 				]);
 			}
 		});
@@ -40,5 +40,35 @@ class Category extends Model
 	public function products()
 	{
 		return $this->belongsToMany(Product::class);
+	}
+
+	public function getRelatedProductsIdAttribute()
+	{
+		$result = $this->products->pluck('id')->toArray();
+		foreach ($this->childs as $child) {
+			$result = array_merge($result, $child->related_products_id);
+		}
+
+		return $result;
+	}
+
+	public function getTotalProductsAttribute()
+	{
+		return Product::whereIn('id', $this->related_products_id)->count();
+	}
+
+	public function scopeNoParent($query)
+	{
+		return $query->where('parent_id', null);
+	}
+
+	public function hasChild()
+	{
+		return $this->childs()->count() > 0;
+	}
+
+	public function hasParent()
+	{
+		return null != $this->parent_id;
 	}
 }

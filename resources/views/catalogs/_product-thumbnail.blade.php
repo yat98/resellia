@@ -3,7 +3,7 @@
         <h3>{{ $product->name }}</h3>
     </div>
     <div class="card-body">
-        <img src="{{ asset('/storage/products/' . $product->photo) }}" class="img-thumbnail">
+        <img src="{{ asset('/storage/products/' . $product->photo) }}" class="img-thumbnail mb-3">
         <p>Model : {{ $product->model }}</p>
         <p>Harga : <strong>Rp. {{ number_format($product->price, 2, ',', '.') }}</strong></p>
         <p>

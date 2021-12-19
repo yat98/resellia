@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', [CatalogsController::class, 'index']);
+Route::get('catalogs', [CatalogsController::class, 'index']);
 
 Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function ($route) {
