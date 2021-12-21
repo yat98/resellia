@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb d-flex justify-content-between">
         @if (!is_null($current_category) && !empty($q))
             <li>
                 Kategori:
@@ -28,5 +28,19 @@
         @else
             <li>Kategori: Semua Produk</li>
         @endif
+        <li>
+            Urutkan harga :
+            <a href="{{ appendsQueryString(['sort' => 'price', 'order' => 'asc']) }}"
+                class="btn btn-sm btn-light 
+                {{ isQueryStringEqual(['sort' => 'price', 'order' => 'asc']) ? 'active' : '' }}">
+                Termurah
+            </a>
+            |
+            <a href="{{ appendsQueryString(['sort' => 'price', 'order' => 'desc']) }}"
+                class="btn btn-sm btn-light 
+                {{ isQueryStringEqual(['sort' => 'price', 'order' => 'desc']) ? 'active' : '' }}">
+                Termahal
+            </a>
+        </li>
     </ol>
 </div>

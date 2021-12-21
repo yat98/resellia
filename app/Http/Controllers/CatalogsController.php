@@ -21,6 +21,14 @@ class CatalogsController extends Controller
 			$data = array_merge($data, compact('q'));
 		}
 
+		if ($request->has('sort')) {
+			$sort = $request->sort;
+			$order = $request->has('order') ? $request->order : 'asc';
+			$field = (in_array($sort, ['price', 'name'])) ? $sort : 'price';
+			$products = $products->orderBy($field, $order);
+			$data = array_merge($data, compact('sort', 'order'));
+		}
+
 		if ($request->has('cat')) {
 			$cat = $request->cat;
 			$category = Category::find($cat);
@@ -35,6 +43,11 @@ class CatalogsController extends Controller
 		if ($request->has('q')) {
 			$products = $products->appends(['q' => $q]);
 		}
+
+		if ($request->has('sort')) {
+			$products = $products->appends(['sort' => $sort, 'order' => $order]);
+		}
+
 		$data = array_merge($data, compact('products', 'categoryNoParent', 'countProducts'));
 
 		return view('catalogs.index', $data);
