@@ -12,5 +12,5 @@ function appendsQueryString($params)
 
 function isQueryStringEqual($params)
 {
-	return !array_diff($params, Request::all());
+	return !array_diff($params, request()->all());
 }

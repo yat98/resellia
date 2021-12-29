@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
@@ -24,6 +25,8 @@ Route::get('catalogs', [CatalogsController::class, 'index'])
 	->name('catalogs.index');
 
 Route::get('home', [HomeController::class, 'index'])->name('home');
+Route::post('cart', [CartController::class, 'storeProduct'])->name('cart');
+
 Route::group(['middleware' => 'auth'], function ($route) {
 	$route->group(['middleware' => 'role:admin'], function ($route) {
 		$route->resource('categories', CategoriesController::class, ['names' => 'categories'])
