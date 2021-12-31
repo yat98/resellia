@@ -4,7 +4,6 @@
     <div class="form-row">
         <div class="col-8">
             {{ Form::number('quantity', null, ['class' => 'form-control', 'min' => 1, 'placeholder' => 'Jumlah Order']) }}
-
         </div>
         <div class="col-4">
             {{ Form::submit('Tambah ke cart', ['class' => 'btn btn-primary']) }}

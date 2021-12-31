@@ -22,6 +22,14 @@
                     'current_category' => isset($category) ? $category : null,
                     'q' => isset($q) ? $q :'',
                     ])
+                    @if ($errors->has('quantity'))
+                        <div class="col-12">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                {!! $errors->first('quantity') !!}
+                            </div>
+                        </div>
+                    @endif
                     @forelse($products as $product)
                         <div class="col-sm-12 col-md-12 col-lg-6">
                             @include('catalogs._product-thumbnail')
