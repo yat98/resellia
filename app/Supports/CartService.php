@@ -41,6 +41,16 @@ class CartService
 		return $total;
 	}
 
+	public function totalPrice()
+	{
+		$result = 0;
+		foreach ($this->details() as $order) {
+			$result += $order['subTotal'];
+		}
+
+		return $result;
+	}
+
 	public function details()
 	{
 		$result = [];

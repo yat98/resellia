@@ -29,4 +29,9 @@ class CartController extends Controller
 		return redirect()->route('catalogs.index')
 			->withCookie(cookie()->forever('cart', json_encode($cart)));
 	}
+
+	public function show()
+	{
+		return view('carts.index');
+	}
 }

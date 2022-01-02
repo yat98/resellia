@@ -23,6 +23,7 @@ Auth::routes();
 Route::get('/', [CatalogsController::class, 'index']);
 Route::get('catalogs', [CatalogsController::class, 'index'])
 	->name('catalogs.index');
+Route::get('cart', [CartController::class, 'show'])->name('cart.show');
 
 Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::post('cart', [CartController::class, 'storeProduct'])->name('cart');
