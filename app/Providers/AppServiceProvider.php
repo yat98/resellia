@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\ViewComposers\CartComposer;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Flash\Flash;
 
@@ -27,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
 			'warning' => 'alert-warning',
 			'error' => 'alert-error',
 		]);
+
+		View::composer('*', CartComposer::class);
 	}
 }

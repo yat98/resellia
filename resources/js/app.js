@@ -43,4 +43,22 @@ $(function () {
         var fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
     })
+    console.log($('#product_name').length);
+    console.log($('#product_name').data('name'));
+    if ($('#product_name').length > 0) {
+        Swal.fire({
+            title: 'Sukses',
+            html: `Berhasil menambahkan <strong>${$('#product_name').data('name')}</strong> ke cart!`,
+            icon: 'success',
+            showCancelButton: true,
+            confirmButtonColor: '#63BC81',
+            confirmButtonText: 'Yep, lanjutkan!',
+            cancelButtonText: 'Lanjutkan belanja',
+            closeOnConfirm: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = '/cart';
+            }
+        })
+    }
 });

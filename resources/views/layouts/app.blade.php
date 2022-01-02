@@ -97,6 +97,9 @@
             </div>
         </nav>
         <main class="py-4 mt-3">
+            @if (session()->has('product_name'))
+                @include('catalogs._products-added',['product' => session()->get('product_name')])
+            @endif
             @if (flash()->message)
                 <div class="container">
                     <div class="alert {{ flash()->class }} alert-dismissible">
