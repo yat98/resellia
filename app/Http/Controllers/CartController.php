@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Supports\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+	protected $cart;
+
+	public function __construct(CartService $cart)
+	{
+		$this->cart = $cart;
+	}
+
 	public function storeProduct(Request $request)
 	{
 		$this->validate($request, [
@@ -33,5 +41,19 @@ class CartController extends Controller
 	public function show()
 	{
 		return view('carts.index');
+	}
+
+	public function destroy(Product $product)
+	{
+		$cart = $this->cart->find($product->id);
+		if (!$cart) {
+			return redirect()->route('cart.index');
+		}
+		flash()->success($cart['detail']['name'] . ' berhasil dihapus dari cart.');
+		$cart = json_decode(request()->cookie('cart'), true) ?? [];
+		unset($cart[$product->id]);
+
+		return redirect()->route('cart')
+			->withCookie(cookie()->forever('cart', json_encode($cart)));
 	}
 }

@@ -34,11 +34,19 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td data-th="Harga" class="align-middle">{{ $order['detail']['price'] }}</td>
+                                    <td data-th="Harga" class="align-middle">Rp.
+                                        {{ number_format($order['detail']['price'], 2, ',', '.') }}</td>
                                     <td data-th="Jumlah" class="align-middle">{{ $order['quantity'] }}</td>
-                                    <td data-th="Subtotal" class="text-center align-middle">
+                                    <td data-th="Subtotal" class="text-center align-middle">Rp.
                                         {{ number_format($order['subTotal'], 2, ',', '.') }}</td>
-                                    <td class="align-middle">Untuk action</td>
+                                    <td data-th=" " class="actions align-middle">
+                                        {{ Form::open(['route' => ['cart.destroy', $order['id']], 'method' => 'DELETE', 'class' => 'form-inline']) }}
+                                        <button class="btn btn-sm btn-danger js-submit-confirm"
+                                            data-confirm-message="Kamu akan menghapus {{ $order['detail']['name'] }} dari cart">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        {{ Form::close() }}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -17,7 +17,7 @@ $(function () {
         e.preventDefault();
         let el = $(this);
         let form = el.closest('form');
-        let text = el.data('confirm-data') ? el.data('confirm-data') : 'Kamu tidak akan bisa membatalkan proses ini!';
+        let text = el.data('confirm-message') ? el.data('confirm-message') : 'Kamu tidak akan bisa membatalkan proses ini!';
 
         Swal.fire({
             title: 'Kamu yakin?',
