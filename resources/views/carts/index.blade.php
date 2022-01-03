@@ -14,8 +14,8 @@
                 @else
                     <table class="cart table table-hover table-sm">
                         <thead>
-                            <th width="45%">Produk</th>
-                            <th width="10%">Harga</th>
+                            <th width="40%">Produk</th>
+                            <th width="15%">Harga</th>
                             <th width="8%">Jumlah</th>
                             <th width="22%" class="text-center">Subtotal</th>
                             <th width="15%"> </th>
@@ -36,10 +36,19 @@
                                     </td>
                                     <td data-th="Harga" class="align-middle">Rp.
                                         {{ number_format($order['detail']['price'], 2, ',', '.') }}</td>
-                                    <td data-th="Jumlah" class="align-middle">{{ $order['quantity'] }}</td>
+                                    <td data-th="Jumlah" class="align-middle">
+                                        {{ Form::open(['route' => ['cart.update', $order['id']], 'method' => 'PUT', 'class' => 'form-inline']) }}
+                                        <div class="form-group">
+                                            {{ Form::number('quantity', $order['quantity'], ['class' => 'text-center form-control', 'min' => 1]) }}
+                                        </div>
+                                    </td>
                                     <td data-th="Subtotal" class="text-center align-middle">Rp.
                                         {{ number_format($order['subTotal'], 2, ',', '.') }}</td>
                                     <td data-th=" " class="actions align-middle">
+                                        <button class="btn btn-info btn-sm" type="submit">
+                                            <i class="fas fa-sync text-white"></i>
+                                        </button>
+                                        {{ Form::close() }}
                                         {{ Form::open(['route' => ['cart.destroy', $order['id']], 'method' => 'DELETE', 'class' => 'form-inline']) }}
                                         <button class="btn btn-sm btn-danger js-submit-confirm"
                                             data-confirm-message="Kamu akan menghapus {{ $order['detail']['name'] }} dari cart">

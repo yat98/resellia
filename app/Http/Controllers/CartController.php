@@ -43,11 +43,29 @@ class CartController extends Controller
 		return view('carts.index');
 	}
 
+	public function update(Request $request, Product $product)
+	{
+		$this->validate($request, [
+			'quantity' => 'required|integer|min:1',
+		]);
+		$quantity = $request->quantity;
+		$cart = $this->cart->find($product->id);
+		if (!$cart) {
+			return redirect()->route('cart.show');
+		}
+		flash()->success('Jumlah order untuk ' . $cart['detail']['name'] . ' berhasil dirubah.');
+		$cart = json_decode(request()->cookie('cart'), true) ?? [];
+		$cart[$product->id] = $quantity;
+
+		return redirect()->route('cart.show')
+			->withCookie(cookie()->forever('cart', json_encode($cart)));
+	}
+
 	public function destroy(Product $product)
 	{
 		$cart = $this->cart->find($product->id);
 		if (!$cart) {
-			return redirect()->route('cart.index');
+			return redirect()->route('cart.show');
 		}
 		flash()->success($cart['detail']['name'] . ' berhasil dihapus dari cart.');
 		$cart = json_decode(request()->cookie('cart'), true) ?? [];
