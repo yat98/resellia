@@ -66,6 +66,18 @@ class CartController extends Controller
 			return redirect()->route('cart.show');
 		}
 		flash()->success('Jumlah order untuk ' . $cart['detail']['name'] . ' berhasil dirubah.');
+
+		if (Auth::user()) {
+			$cart = Cart::firstOrNew([
+				'product_id' => $product->id,
+				'user_id' => request()->user()->id,
+			]);
+			$cart->quantity = $quantity;
+			$cart->save();
+
+			return redirect()->route('cart.show');
+		}
+
 		$cart = json_decode(request()->cookie('cart'), true) ?? [];
 		$cart[$product->id] = $quantity;
 
@@ -80,6 +92,17 @@ class CartController extends Controller
 			return redirect()->route('cart.show');
 		}
 		flash()->success($cart['detail']['name'] . ' berhasil dihapus dari cart.');
+
+		if (Auth::user()) {
+			$cart = Cart::firstOrNew([
+				'product_id' => $product->id,
+				'user_id' => request()->user()->id,
+			]);
+			$cart->delete();
+
+			return redirect()->route('cart.show');
+		}
+
 		$cart = json_decode(request()->cookie('cart'), true) ?? [];
 		unset($cart[$product->id]);
 
