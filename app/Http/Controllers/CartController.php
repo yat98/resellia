@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
 use App\Supports\CartService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -22,9 +24,19 @@ class CartController extends Controller
 			'product_id' => 'required|exists:products,id',
 			'quantity' => 'required|integer|min:1',
 		]);
-
 		$product = Product::find($request->get('product_id'));
 		$quantity = $request->quantity;
+
+		if (Auth::check()) {
+			$cart = Cart::firstOrNew([
+				'product_id' => $product->id,
+				'user_id' => $request->user()->id,
+			]);
+			$cart->quantity += $quantity;
+			$cart->save();
+
+			return redirect()->route('catalogs.index');
+		}
 
 		$cart = json_decode($request->cookie('cart'), true) ?? [];
 		if (array_key_exists($product->id, $cart)) {

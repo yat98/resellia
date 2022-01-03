@@ -59,8 +59,8 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+                        @include('catalogs._customer-feature',['partial_view' => 'layouts._cart-menu-bar'])
                         @guest
-                            @include('catalogs._customer-feature',['partial_view' => 'layouts._cart-menu-bar'])
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
