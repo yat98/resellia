@@ -86,4 +86,19 @@ class CartService
 
 		return null;
 	}
+
+	public function merge()
+	{
+		$cartCookie = json_decode($this->request->cookie('cart'), true) ?? [];
+		foreach ($cartCookie as $id => $quantity) {
+			$cart = Cart::firstOrNew([
+				'product_id' => $id,
+				'user_id' => $this->request->user()->id,
+			]);
+			$cart->quantity = $cart->quantity > 0 ? $cart->quantity : $quantity;
+			$cart->save();
+		}
+
+		return cookie()->forget('cart');
+	}
 }
