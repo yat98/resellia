@@ -2,8 +2,10 @@
 
 namespace App\Supports;
 
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartService
 {
@@ -16,6 +18,11 @@ class CartService
 
 	public function lists()
 	{
+		if (Auth::user()) {
+			return Cart::where('user_id', Auth::user()->id)
+				->pluck('quantity', 'product_id');
+		}
+
 		return json_decode($this->request->cookie('cart'), true) ?? [];
 	}
 
