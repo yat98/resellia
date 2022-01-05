@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1ee2145d477f4b5a9b7e202a2696b18",
+    "content-hash": "d1ec3105005dc8e2259c84e8c1f8dfb4",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -958,6 +958,68 @@
                 }
             ],
             "time": "2021-10-06T17:43:30+00:00"
+        },
+        {
+            "name": "irfa/raja-ongkir",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/irfaardy/raja-ongkir.git",
+                "reference": "8058549a18002bab10b3ad0ee0600a1eaffdff00"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/irfaardy/raja-ongkir/zipball/8058549a18002bab10b3ad0ee0600a1eaffdff00",
+                "reference": "8058549a18002bab10b3ad0ee0600a1eaffdff00",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "default-branch": true,
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Irfa\\RajaOngkir\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Irfa A",
+                    "email": "irfa.backend@protonmail.com"
+                }
+            ],
+            "description": "\"Laravel Raja Ongkir Package\"",
+            "keywords": [
+                "cek ongkir",
+                "laravel",
+                "ongkir",
+                "php",
+                "raja ongkir"
+            ],
+            "support": {
+                "issues": "https://github.com/irfaardy/raja-ongkir/issues",
+                "source": "https://github.com/irfaardy/raja-ongkir/tree/master"
+            },
+            "funding": [
+                {
+                    "url": "https://buymeacoff.ee/irfaardy",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://ko-fi.com/irfaardy",
+                    "type": "ko_fi"
+                },
+                {
+                    "url": "https://www.patreon.com/irfa",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2021-01-21T10:46:40+00:00"
         },
         {
             "name": "laravel/framework",
@@ -8146,7 +8208,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "irfa/raja-ongkir": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
