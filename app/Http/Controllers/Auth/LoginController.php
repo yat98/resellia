@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Supports\CartService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -22,7 +20,6 @@ class LoginController extends Controller
 	*/
 
 	use AuthenticatesUsers;
-	protected $cart;
 
 	/**
 	 * Where to redirect users after login.
@@ -34,20 +31,8 @@ class LoginController extends Controller
 	/**
 	 * Create a new controller instance.
 	 */
-	public function __construct(CartService $cart)
+	public function __construct()
 	{
 		$this->middleware('guest')->except('logout');
-		$this->cart = $cart;
-	}
-
-	protected function authenticated(Request $request, $user)
-	{
-		if ($user->can('customer-access')) {
-			$cookie = $this->cart->merge();
-
-			return redirect($this->redirectTo)->withCookie($cookie);
-		}
-
-		return redirect($this->redirectTo);
 	}
 }

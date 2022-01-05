@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogsController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +24,17 @@ Auth::routes();
 Route::get('/', [CatalogsController::class, 'index']);
 Route::get('catalogs', [CatalogsController::class, 'index'])
 	->name('catalogs.index');
+
 Route::get('cart', [CartController::class, 'show'])->name('cart.show');
+Route::post('cart', [CartController::class, 'storeProduct'])->name('cart.store');
 Route::put('cart/{product}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
 
+Route::get('checkout/login', [CheckoutController::class, 'login'])->name('checkout.index');
+Route::post('checkout/login', [CheckoutController::class, 'postLogin'])->name('checkout.post');
+Route::get('checkout/address', [CheckoutController::class, 'getAddress'])->name('checkout.address');
+
 Route::get('home', [HomeController::class, 'index'])->name('home');
-Route::post('cart', [CartController::class, 'storeProduct'])->name('cart');
 
 Route::group(['middleware' => 'auth'], function ($route) {
 	$route->group(['middleware' => 'role:admin'], function ($route) {

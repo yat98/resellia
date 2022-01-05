@@ -1,5 +1,5 @@
 <div>
-    {{ Form::open(['route' => 'cart', 'method' => 'POST']) }}
+    {{ Form::open(['route' => 'cart.store', 'method' => 'POST']) }}
     {{ Form::hidden('product_id', $product->id) }}
     <div class="form-row">
         <div class="col-8">

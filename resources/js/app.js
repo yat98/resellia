@@ -43,8 +43,7 @@ $(function () {
         var fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
     })
-    console.log($('#product_name').length);
-    console.log($('#product_name').data('name'));
+
     if ($('#product_name').length > 0) {
         Swal.fire({
             title: 'Sukses',
@@ -61,4 +60,20 @@ $(function () {
             }
         })
     }
+
+    function passwordChecked() {
+        if ($("input[name=checkout_password]").length > 0 && $('input[name=is_guest]').length > 0 && $('input[name=is_guest]:checked').val() > 0) {
+            $("input[name=checkout_password]").prop('disabled', true);
+        }
+    }
+
+    passwordChecked();
+    $("input[name=is_guest]").on('change', function () {
+        console.log($(this).val());
+        if ($(this).val() == 1) {
+            passwordChecked();
+        } else {
+            $("input[name=checkout_password]").removeAttr('disabled');
+        }
+    });
 });
