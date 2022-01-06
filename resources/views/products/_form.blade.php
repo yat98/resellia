@@ -9,6 +9,11 @@
     {!! $errors->first('model', '<div id="model" class="invalid-feedback">:message</div>') !!}
 </div>
 <div class="form-group">
+    {{ Form::label('weight', 'weight') }}
+    {{ Form::text('weight', null, ['id' => 'weight', 'class' => 'form-control ' . ($errors->has('weight') ? 'is-invalid' : '')]) }}
+    {!! $errors->first('weight', '<div id="weight" class="invalid-feedback">:message</div>') !!}
+</div>
+<div class="form-group">
     {{ Form::label('price', 'Price') }}
     {{ Form::text('price', null, ['id' => 'price', 'class' => 'form-control ' . ($errors->has('price') ? 'is-invalid' : '')]) }}
     {!! $errors->first('price', '<div id="price" class="invalid-feedback">:message</div>') !!}

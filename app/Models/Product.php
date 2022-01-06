@@ -14,6 +14,7 @@ class Product extends Model
 		'photo',
 		'model',
 		'price',
+		'weight',
 	];
 
 	public static function boot()
@@ -33,5 +34,16 @@ class Product extends Model
 	public function carts()
 	{
 		return $this->hasMany(Cart::class, 'product_id');
+	}
+
+	public function getCostTo($destinationId)
+	{
+		return Fee::getCost(
+			config('irfa.rajaongkir.origin'),
+			$destinationId,
+			$this->weight,
+			config('irfa.rajaongkir.courier'),
+			config('irfa.rajaongkir.service'),
+		);
 	}
 }

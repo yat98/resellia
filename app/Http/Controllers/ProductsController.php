@@ -32,8 +32,9 @@ class ProductsController extends Controller
 			'model' => 'required',
 			'photo' => 'required|mimes:jpeg,png|max:10240',
 			'price' => 'required|numeric|min:1000',
+			'weight' => 'required|numeric|min:1',
 		]);
-		$data = $request->only('name', 'price', 'model');
+		$data = $request->only('name', 'price', 'model', 'weight');
 		if ($request->hasFile('photo')) {
 			$data['photo'] = $this->uploadFile($request, 'photo', '/public/products');
 		}
@@ -58,8 +59,9 @@ class ProductsController extends Controller
 			'model' => 'required',
 			'photo' => 'sometimes|mimes:jpeg,png|max:10240',
 			'price' => 'required|numeric|min:1000',
+			'weight' => 'required|numeric|min:1',
 		]);
-		$data = $request->only('name', 'price', 'model');
+		$data = $request->only('name', 'price', 'model', 'weight');
 		if ($request->hasFile('photo')) {
 			$data['photo'] = $this->uploadFile($request, 'photo', '/public/products');
 			if ('' != $product->photo) {
