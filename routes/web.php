@@ -30,9 +30,13 @@ Route::post('cart', [CartController::class, 'storeProduct'])->name('cart.store')
 Route::put('cart/{product}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
 
-Route::get('checkout/login', [CheckoutController::class, 'login'])->name('checkout.index');
-Route::post('checkout/login', [CheckoutController::class, 'postLogin'])->name('checkout.post');
-Route::get('checkout/address', [CheckoutController::class, 'getAddress'])->name('checkout.address');
+Route::get('checkout/login', [CheckoutController::class, 'login'])->name('checkout.login');
+Route::post('checkout/login', [CheckoutController::class, 'postLogin'])->name('checkout.post-login');
+Route::get('checkout/address', [CheckoutController::class, 'address'])->name('checkout.address');
+Route::post('checkout/address', [CheckoutController::class, 'postAddress'])->name('checkout.post-address');
+Route::get('checkout/payment', function () {
+	return var_dump(session()->get('checkout'));
+})->name('checkout.payment');
 
 Route::get('home', [HomeController::class, 'index'])->name('home');
 

@@ -5,11 +5,11 @@
                 <ul class="nav nav-pills nav-fill card-header-pills">
                     <li class="nav-item">
                         <a class="nav-link h5 {{ request()->is('checkout/login') ? 'active' : 'disabled' }}"
-                            href="{{ route('checkout.index') }}">Login</a>
+                            href="{{ route('checkout.login') }}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link h5 {{ request()->is('checkout/address') ? 'active' : 'disabled' }}"
-                            href="#">Alamat</a>
+                            href="{{ route('checkout.address') }}">Alamat</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link h5 {{ request()->is('checkout/payment') ? 'active' : 'disabled' }}"

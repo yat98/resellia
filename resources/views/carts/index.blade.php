@@ -72,7 +72,7 @@
                                         Rp.{{ number_format($cart->totalPrice(), 2, ',', '.') }}</strong>
                                 </td>
                                 <td>
-                                    <a href="{{ route('checkout.index') }}" class="btn btn-success btn-block">
+                                    <a href="{{ route('checkout.login') }}" class="btn btn-success btn-block">
                                         Pembayaran <i class="fas fa-angle-right"></i>
                                     </a>
                                 </td>

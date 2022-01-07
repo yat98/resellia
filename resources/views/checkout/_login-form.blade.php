@@ -1,12 +1,12 @@
-{{ Form::open(['route' => 'checkout.post', 'method' => 'POST']) }}
+{{ Form::open(['route' => 'checkout.post-login', 'method' => 'POST', 'class' => 'text-center']) }}
 <div class="form-group row">
     {{ Form::label('email', 'Email', ['class' => 'col-md-4 col-form-label']) }}
-    <div class="col-md-6">
+    <div class="col-md-6 text-left">
         {{ Form::text('email', null, ['id' => 'email', 'class' => 'form-control ' . ($errors->has('email') ? 'is-invalid' : '')]) }}
         {!! $errors->first('email', '<div id="email" class="invalid-feedback">:message</div>') !!}
     </div>
 </div>
-<div class="form-group row">
+<div class="form-group row text-left">
     <div class="col-md-6 offset-md-4 radio">
         <p class="display-d is-invalid mb-0 pb-0">
             <label>
@@ -21,13 +21,13 @@
 </div>
 <div class="form-group row">
     {{ Form::label('checkout_password', 'Password', ['class' => 'col-md-4 col-form-label']) }}
-    <div class="col-md-6">
+    <div class="col-md-6 text-left">
         {{ Form::password('checkout_password', ['id' => 'checkout_password', 'class' => 'form-control ' . ($errors->has('checkout_password') ? 'is-invalid' : '')]) }}
         {!! $errors->first('checkout_password', '<div id="checkout_password" class="invalid-feedback">:message</div>') !!}
         <a href="{{ route('password.request') }}">Lupa kata sandi?</a>
     </div>
 </div>
-<div class="form-group row">
+<div class="form-group row text-left">
     <div class="col-md-6 offset-md-4 radio">
         <button class="btn btn-primary" type="submit">
             Lanjut <i class="fas fa-arrow-right"></i>

@@ -5,6 +5,7 @@ require('bootstrap');
 
 // Sweetalert2
 require('sweetalert2');
+import { Callbacks } from 'jquery';
 import Swal from 'sweetalert2'
 
 // Selectize
@@ -76,4 +77,43 @@ $(function () {
             $("input[name=checkout_password]").removeAttr('disabled');
         }
     });
+
+    if ($('#province_id').length > 0) {
+        let xhr, provinceSelector, citySelector, $provinceSelector, $citySelector;
+
+        $provinceSelector = $('#province_id').selectize({
+            sortField: 'text',
+            onChange: function (value) {
+                if (!value.length) {
+                    citySelector.disable();
+                    citySelector.clearOptions();
+                    return;
+                }
+                citySelector.clearOptions();
+                citySelector.load(function (callback) {
+                    xhr && xhr.abort();
+                    xhr = $.ajax({
+                        url: '/api/address/cities?province_id=' + value,
+                        success: function (results) {
+                            citySelector.enable();
+                            callback(results);
+                        },
+                        error: function () {
+                            callback();
+                        }
+                    })
+                });
+            }
+        });
+
+        $citySelector = $('#city_id').selectize({
+            sortField: 'name',
+            valueField: 'city_id',
+            labelField: 'name',
+            searchField: ['name']
+        });
+
+        provinceSelector = $provinceSelector[0].selectize;
+        citySelector = $citySelector[0].selectize;
+    }
 });
