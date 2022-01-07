@@ -34,9 +34,8 @@ Route::get('checkout/login', [CheckoutController::class, 'login'])->name('checko
 Route::post('checkout/login', [CheckoutController::class, 'postLogin'])->name('checkout.post-login');
 Route::get('checkout/address', [CheckoutController::class, 'address'])->name('checkout.address');
 Route::post('checkout/address', [CheckoutController::class, 'postAddress'])->name('checkout.post-address');
-Route::get('checkout/payment', function () {
-	return var_dump(session()->get('checkout'));
-})->name('checkout.payment');
+Route::get('checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
+Route::post('checkout/payment', [CheckoutController::class, 'postPayment'])->name('checkout.post-payment');
 
 Route::get('home', [HomeController::class, 'index'])->name('home');
 

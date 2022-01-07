@@ -14,3 +14,14 @@ function isQueryStringEqual($params)
 {
 	return !array_diff($params, request()->all());
 }
+
+function bankList()
+{
+	$banks = config('bank-accounts');
+	$results = [];
+	foreach ($banks as $account => $detail) {
+		$results[$account] = $detail['title'];
+	}
+
+	return $results;
+}

@@ -101,4 +101,20 @@ class CartService
 
 		return cookie()->forget('cart');
 	}
+
+	public function shippingFee()
+	{
+		$total = 0;
+		foreach ($this->lists() as $id => $quantity) {
+			$fee = Product::find($id)->getCostTo($this->getDestinationId()) * $quantity;
+			$total += $fee;
+		}
+
+		return $total;
+	}
+
+	protected function getDestinationId()
+	{
+		return session('checkout.address.city_id');
+	}
 }

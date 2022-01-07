@@ -11,7 +11,8 @@
             <tr>
                 <td data-th="Produk">{{ $order['detail']['name'] }}</td>
                 <td data-th="Jumlah" class="text-center">{{ $order['quantity'] }}</td>
-                <td data-th="Harga" class="text-right">Rp.{{ number_format($order['detail']['price'], 2, ',', '.') }}
+                <td data-th="Harga" class="text-right">
+                    Rp.{{ number_format($order['detail']['price'], 2, ',', '.') }}
                 </td>
             </tr>
             <tr>
@@ -23,13 +24,32 @@
         @endforeach
     </tbody>
     <tfoot>
-        <tr>
-            <td><strong>Total</strong></td>
-            <td class="text-right" colspan="2">
-                <strong>
-                    Rp.{{ number_format($cart->totalPrice(), 2, ',', '.') }}
-                </strong>
-            </td>
-        </tr>
+        @if (request()->routeIs('checkout.payment'))
+            <tr>
+                <td><strong>Ongkos Kirim</strong></td>
+                <td class="text-right" colspan="2">
+                    <strong>
+                        Rp.{{ number_format($cart->shippingFee(), 2, ',', '.') }}
+                    </strong>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td class="text-right" colspan="2">
+                    <strong>
+                        Rp.{{ number_format($cart->totalPrice() + $cart->shippingFee(), 2, ',', '.') }}
+                    </strong>
+                </td>
+            </tr>
+        @else
+            <tr>
+                <td><strong>Total</strong></td>
+                <td class="text-right" colspan="2">
+                    <strong>
+                        Rp.{{ number_format($cart->totalPrice(), 2, ',', '.') }}
+                    </strong>
+                </td>
+            </tr>
+        @endif
     </tfoot>
 </table>

@@ -59,6 +59,15 @@ class CheckoutController extends Controller
 		return $this->guestAddress($request);
 	}
 
+	public function payment()
+	{
+		return view('checkout.payment');
+	}
+
+	public function postPayment()
+	{
+	}
+
 	protected function guestCheckout($email)
 	{
 		if ($user = User::where('email', $email)->first()) {

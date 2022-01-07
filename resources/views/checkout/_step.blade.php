@@ -13,7 +13,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link h5 {{ request()->is('checkout/payment') ? 'active' : 'disabled' }}"
-                            href="#">Pembayaran</a>
+                            href="{{ route('checkout.payment') }}">Pembayaran</a>
                     </li>
                 </ul>
             </div>
