@@ -4,14 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutAddressRequest;
 use App\Http\Requests\CheckoutLoginRequest;
+use App\Models\Address;
 use App\Models\City;
+use App\Models\Order;
+use App\Models\OrderDetails;
+use App\Models\Product;
 use App\Models\Province;
 use App\Models\User;
+use App\Supports\CartService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
 
 class CheckoutController extends Controller
 {
+	protected $cart;
+
+	public function __construct(CartService $cart)
+	{
+		$this->cart = $cart;
+	}
+
 	public function login()
 	{
 		return view('checkout.login');
@@ -64,8 +77,28 @@ class CheckoutController extends Controller
 		return view('checkout.payment');
 	}
 
-	public function postPayment()
+	public function postPayment(Request $request)
 	{
+		$this->validate($request, [
+			'bank_name' => 'required|in:' . implode(',', array_keys(bankList())),
+			'sender' => 'required',
+		]);
+
+		session([
+			'checkout.payment.bank' => $request->bank_name,
+			'checkout.payment.sender' => $request->sender,
+		]);
+
+		if (Auth::check()) {
+			return $this->authenticatedPayment($request);
+		}
+
+		return $this->guestPayment($request);
+	}
+
+	public function success()
+	{
+		return session()->get('order');
 	}
 
 	protected function guestCheckout($email)
@@ -115,5 +148,58 @@ class CheckoutController extends Controller
 			'checkout.address.city_id' => $request->city_id,
 			'checkout.address.phone' => $request->phone,
 		]);
+	}
+
+	protected function guestPayment($request)
+	{
+		$user = $this->setupCustomer(session('checkout.email'), session('checkout.address.name'));
+		$bank = session('checkout.payment.bank');
+		$sender = session('checkout.payment.sender');
+		$address = $this->setupAddress($user, session('checkout.address'));
+		$order = $this->makeOrder($user->id, $bank, $sender, $address, $this->cart->details());
+		session()->forget('checkout');
+		$deleteCookie = $this->cart->clearCartCookie();
+
+		return redirect()->route('checkout.success')
+			->with(compact('order'))
+			->withCookie($deleteCookie);
+	}
+
+	protected function setupCustomer($email, $name)
+	{
+		return User::create(compact('email', 'name') + ['role' => 'customer']);
+	}
+
+	protected function setupAddress(User $customer, $addressSession)
+	{
+		return Address::create([
+			'user_id' => $customer->id,
+			'city_id' => $addressSession['city_id'],
+			'name' => $addressSession['name'],
+			'detail' => $addressSession['detail'],
+			'phone' => $addressSession['phone'],
+		]);
+	}
+
+	protected function authenticatedPayment($request)
+	{
+		return 'akan diisi dengan logic authenticated payment';
+	}
+
+	protected function makeOrder($user_id, $bank, $sender, Address $address, $cart)
+	{
+		$address_id = $address->id;
+		$order = Order::create(compact('user_id', 'address_id', 'bank', 'sender'));
+		foreach ($cart as $product) {
+			OrderDetails::create([
+				'order_id' => $order->id,
+				'product_id' => $product['id'],
+				'quantity' => $product['quantity'],
+				'price' => $product['detail']['price'],
+				'fee' => Product::find($product['id'])->getCostTo($address->city_id),
+			]);
+		}
+
+		return $order;
 	}
 }

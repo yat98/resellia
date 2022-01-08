@@ -36,6 +36,7 @@ Route::get('checkout/address', [CheckoutController::class, 'address'])->name('ch
 Route::post('checkout/address', [CheckoutController::class, 'postAddress'])->name('checkout.post-address');
 Route::get('checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
 Route::post('checkout/payment', [CheckoutController::class, 'postPayment'])->name('checkout.post-payment');
+Route::get('checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
 
 Route::get('home', [HomeController::class, 'index'])->name('home');
 

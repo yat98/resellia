@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class CartService
 {
@@ -111,6 +112,11 @@ class CartService
 		}
 
 		return $total;
+	}
+
+	public function clearCartCookie()
+	{
+		return Cookie::forget('cart');
 	}
 
 	protected function getDestinationId()

@@ -49,8 +49,8 @@ class Fee extends Model
 				break;
 			}
 		}
+		$total = $total > 0 ? $total : config('irfa.rajaongkir.fallback_fee');
 
-		$total = $total > 0 ? $total : config('rajaongkir.fallback_fee');
 		$this->update([
 			'cost' => $total,
 			'updated_at' => Carbon::now(),
