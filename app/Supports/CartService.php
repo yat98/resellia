@@ -120,6 +120,11 @@ class CartService
 		return Cookie::forget('cart');
 	}
 
+	public function clearCartRecord()
+	{
+		return Cart::where('user_id', auth()->user()->id)->delete();
+	}
+
 	protected function getDestinationId()
 	{
 		if (Auth::check() && session()->has('checkout.address.address_id')) {
