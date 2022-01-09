@@ -27,6 +27,10 @@ class CheckoutController extends Controller
 
 	public function login()
 	{
+		if (Auth::check()) {
+			return redirect()->route('checkout.address');
+		}
+
 		return view('checkout.login');
 	}
 
@@ -124,7 +128,19 @@ class CheckoutController extends Controller
 
 	protected function authenticatedCheckout($email, $password)
 	{
-		return 'Akan diisi login authenticated checkout';
+		if (!Auth::attempt(['email' => $email, 'password' => $password])) {
+			$errors = new MessageBag();
+			$errors->add('email', 'Data user yang dimasukkan salah');
+
+			return redirect()->route('checkout.login')
+				->withInput(compact('email', 'password') + ['is_guest' => 0])
+				->withErrors($errors);
+		}
+
+		$deleteCookie = $this->cart->merge();
+
+		return redirect()->route('checkout.address')
+			->withCookie($deleteCookie);
 	}
 
 	protected function guestAddress(CheckoutAddressRequest $request)
