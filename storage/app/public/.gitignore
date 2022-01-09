@@ -1,2 +1,5 @@
 *
 !.gitignore
+!/products/
+!/products/stub-jacket.jpg
+!/products/stub-shoe.jpeg

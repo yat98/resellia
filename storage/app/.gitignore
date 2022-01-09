@@ -1,3 +1,6 @@
 *
 !public/
+!public/products/
+!public/products/stub-jacket.jpg
+!public/products/stub-shoe.jpeg
 !.gitignore
