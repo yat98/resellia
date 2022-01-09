@@ -1,7 +1,7 @@
 # RESELLIA
 CMS toko online menggunakan laravel. Studi kasus buku menyelami framework laravel oleh Rahmat Awaludin 
 
-** How to install **
+**How to install**
 1. git clone https://github.com/yat98/resellia.git
 2. run "composer install"
 3. copy .env.example files to .env or run "composer run-script post-root-package-install"
