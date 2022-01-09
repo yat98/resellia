@@ -29,14 +29,23 @@ Route::get('cart', [CartController::class, 'show'])->name('cart.show');
 Route::post('cart', [CartController::class, 'storeProduct'])->name('cart.store');
 Route::put('cart/{product}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::group(['middleware' => 'checkout.have-cart'], function () {
+	Route::get('checkout/login', [CheckoutController::class, 'login'])->name('checkout.login');
+	Route::post('checkout/login', [CheckoutController::class, 'postLogin'])->name('checkout.post-login');
 
-Route::get('checkout/login', [CheckoutController::class, 'login'])->name('checkout.login');
-Route::post('checkout/login', [CheckoutController::class, 'postLogin'])->name('checkout.post-login');
-Route::get('checkout/address', [CheckoutController::class, 'address'])->name('checkout.address');
-Route::post('checkout/address', [CheckoutController::class, 'postAddress'])->name('checkout.post-address');
-Route::get('checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
-Route::post('checkout/payment', [CheckoutController::class, 'postPayment'])->name('checkout.post-payment');
-Route::get('checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+	Route::group(['middleware' => 'checkout.login-step-done'], function () {
+		Route::get('checkout/address', [CheckoutController::class, 'address'])->name('checkout.address');
+		Route::post('checkout/address', [CheckoutController::class, 'postAddress'])->name('checkout.post-address');
+
+		Route::group(['middleware' => 'checkout.address-step-done'], function () {
+			Route::get('checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
+			Route::post('checkout/payment', [CheckoutController::class, 'postPayment'])->name('checkout.post-payment');
+		});
+	});
+});
+Route::group(['middleware' => 'checkout.payment-step-done'], function () {
+	Route::get('checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+});
 
 Route::get('home', [HomeController::class, 'index'])->name('home');
 
