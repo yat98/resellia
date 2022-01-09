@@ -67,4 +67,14 @@ class Order extends Model
 	{
 		return array_keys(static::statusList());
 	}
+
+	public function getTotalFeeAttribute()
+	{
+		$fee = 0;
+		foreach ($this->details as $detail) {
+			$fee += $detail->fee;
+		}
+
+		return $fee;
+	}
 }

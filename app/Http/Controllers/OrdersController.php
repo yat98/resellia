@@ -30,11 +30,22 @@ class OrdersController extends Controller
 		return view('orders.index', compact('orders', 'statusList', 'status', 'q'));
 	}
 
-	public function edit($id)
+	public function edit(Order $order)
 	{
+		$statusList = Order::statusList();
+
+		return view('orders.edit', compact('order', 'statusList'));
 	}
 
-	public function update(Request $request, $id)
+	public function update(Request $request, Order $order)
 	{
+		$this->validate($request, [
+			'status' => 'required|in:' . implode(',', Order::allowedStatus()),
+		]);
+
+		$order->update($request->only('status'));
+		flash()->success($order->padded_id . ' order updated.');
+
+		return redirect()->route('orders.index');
 	}
 }
