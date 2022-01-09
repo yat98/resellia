@@ -50,6 +50,7 @@ class CheckoutController extends Controller
 	public function address()
 	{
 		$cities = [];
+		$addresses = [];
 		if (!empty(request()->old('province_id'))) {
 			$cities = City::where('province_id', request()->old('province_id'))->get();
 
@@ -62,9 +63,13 @@ class CheckoutController extends Controller
 			})->pluck('name', 'city_id')->toArray();
 		}
 
+		if (Auth::check()) {
+			$addresses = auth()->user()->addresses ?? [];
+		}
+
 		$provinces = Province::pluck('province', 'province_id')->toArray();
 
-		return view('checkout.address', compact('provinces', 'cities'));
+		return view('checkout.address', compact('provinces', 'cities', 'addresses'));
 	}
 
 	public function postAddress(CheckoutAddressRequest $request)
@@ -152,7 +157,15 @@ class CheckoutController extends Controller
 
 	protected function authenticatedAddress(CheckoutAddressRequest $request)
 	{
-		return 'Akan diisi login authenticated address';
+		$addressId = $request->address_id;
+		session()->forget('checkout.address');
+		if ('new-address' == $addressId) {
+			$this->saveAddressSession($request);
+		} else {
+			session(['checkout.address.address_id' => $addressId]);
+		}
+
+		return redirect()->route('checkout.payment');
 	}
 
 	protected function saveAddressSession(CheckoutAddressRequest $request)

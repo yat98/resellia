@@ -2,6 +2,7 @@
 
 namespace App\Supports;
 
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -121,6 +122,12 @@ class CartService
 
 	protected function getDestinationId()
 	{
+		if (Auth::check() && session()->has('checkout.address.address_id')) {
+			$address = Address::find(session('checkout.address.address_id'));
+
+			return $address->city_id;
+		}
+
 		return session('checkout.address.city_id');
 	}
 }

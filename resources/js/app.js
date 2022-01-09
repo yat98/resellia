@@ -40,11 +40,13 @@ $(function () {
         sortField: 'text',
     });
 
+    // BS Custom Uplaod
     $('#custom-file-upload').on('change', function (e) {
         var fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
     })
 
+    // Alert Success Add Cart
     if ($('#product_name').length > 0) {
         Swal.fire({
             title: 'Sukses',
@@ -62,12 +64,12 @@ $(function () {
         })
     }
 
+    // Checkout Login Password
     function passwordChecked() {
         if ($("input[name=checkout_password]").length > 0 && $('input[name=is_guest]').length > 0 && $('input[name=is_guest]:checked').val() > 0) {
             $("input[name=checkout_password]").prop('disabled', true);
         }
     }
-
     passwordChecked();
     $("input[name=is_guest]").on('change', function () {
         console.log($(this).val());
@@ -78,6 +80,7 @@ $(function () {
         }
     });
 
+    // Select City Ajax
     if ($('#province_id').length > 0) {
         let xhr, provinceSelector, citySelector, $provinceSelector, $citySelector;
 
@@ -116,4 +119,20 @@ $(function () {
         provinceSelector = $provinceSelector[0].selectize;
         citySelector = $citySelector[0].selectize;
     }
+
+    // Address Show New Address Form
+    if ($('input[name=address_id]').length > 0) {
+        let selected = $('input[name=address_id]:checked').val();
+        if (selected == 'undefined' || selected != 'new-address') {
+            $('#js-new-address').hide();
+        }
+    }
+    $('input[name=address_id]').on('change', function () {
+        let selected = $('input[name=address_id]:checked').val();
+        if (selected == 'new-address') {
+            $('#js-new-address').show();
+        } else {
+            $('#js-new-address').hide();
+        }
+    });
 });

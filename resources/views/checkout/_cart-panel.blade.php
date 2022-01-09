@@ -26,6 +26,14 @@
     <tfoot>
         @if (request()->routeIs('checkout.payment'))
             <tr>
+                <td><strong>Total</strong></td>
+                <td class="text-right" colspan="2">
+                    <strong>
+                        Rp.{{ number_format($cart->totalPrice(), 2, ',', '.') }}
+                    </strong>
+                </td>
+            </tr>
+            <tr>
                 <td><strong>Ongkos Kirim</strong></td>
                 <td class="text-right" colspan="2">
                     <strong>

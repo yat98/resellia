@@ -37,8 +37,8 @@ class City extends Model
 		}
 	}
 
-	public function province()
+	public function provinces()
 	{
-		return $this->belongsTo(Province::class, 'province_id');
+		return $this->belongsTo(Province::class, 'province_id', 'province_id');
 	}
 }

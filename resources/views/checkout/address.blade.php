@@ -10,7 +10,20 @@
                         Alamat Pengiriman
                     </div>
                     <div class="card-body text-center">
-                        @include('checkout._address-new-form')
+                        {{ Form::open(['route' => ['checkout.post-address'], 'method' => 'POST']) }}
+                        @if (auth()->check())
+                            @include('checkout._address-choose-form',['addresses' => $addresses])
+                        @else
+                            @include('checkout._address-new-form')
+                        @endif
+                        <div class="form-group text-left">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Lanjut <i class="fa fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        {{ Form::close() }}
                     </div>
                 </div>
             </div>

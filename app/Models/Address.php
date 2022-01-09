@@ -17,8 +17,13 @@ class Address extends Model
 		'phone',
 	];
 
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'user_id');
+	}
+
 	public function city()
 	{
-		return $this->belongsTo(City::class, 'city_id');
+		return $this->belongsTo(City::class, 'city_id', 'city_id');
 	}
 }
