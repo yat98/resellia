@@ -98,7 +98,7 @@ class CheckoutController extends Controller
 
 	public function success()
 	{
-		return session()->get('order');
+		return view('checkout.success');
 	}
 
 	protected function guestCheckout($email)
@@ -200,6 +200,6 @@ class CheckoutController extends Controller
 			]);
 		}
 
-		return $order;
+		return Order::find($order->id);
 	}
 }

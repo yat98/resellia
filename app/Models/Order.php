@@ -42,4 +42,8 @@ class Order extends Model
 	{
 		return $this->hasMany(OrderDetails::class, 'order_id');
 	}
+
+	public function getPaddedIdAttribute(){
+		return str_pad($this->id, 6, 0, STR_PAD_LEFT);
+	}
 }
