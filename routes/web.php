@@ -59,4 +59,8 @@ Route::group(['middleware' => 'auth'], function ($route) {
 		$route->resource('orders', OrdersController::class, ['names' => 'orders'])
 			->only(['index', 'edit', 'update']);
 	});
+
+	$route->group(['middleware' => 'role:customer'], function ($route) {
+		Route::get('home/orders', [HomeController::class, 'viewOrders'])->name('home.orders');
+	});
 });

@@ -32,10 +32,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @if (auth()->check())
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
-                            </li>
                             @can('admin-access')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
+                                </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownManage" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -65,6 +65,7 @@
                         <!-- Authentication Links -->
                         @can('customer-access')
                             @include('catalogs._customer-feature',['partial_view' => 'layouts._cart-menu-bar'])
+                            @include('catalogs._customer-feature',['partial_view' => 'layouts._check-order-menu-bar'])
                         @endcan
                         @guest
                             @include('catalogs._customer-feature',['partial_view' => 'layouts._cart-menu-bar'])
