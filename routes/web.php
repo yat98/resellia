@@ -5,6 +5,7 @@ use App\Http\Controllers\CatalogsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,17 +30,17 @@ Route::get('cart', [CartController::class, 'show'])->name('cart.show');
 Route::post('cart', [CartController::class, 'storeProduct'])->name('cart.store');
 Route::put('cart/{product}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
-Route::group(['middleware' => 'checkout.have-cart'], function () {
-	Route::get('checkout/login', [CheckoutController::class, 'login'])->name('checkout.login');
-	Route::post('checkout/login', [CheckoutController::class, 'postLogin'])->name('checkout.post-login');
+Route::group(['middleware' => 'checkout.have-cart'], function ($route) {
+	$route->get('checkout/login', [CheckoutController::class, 'login'])->name('checkout.login');
+	$route->post('checkout/login', [CheckoutController::class, 'postLogin'])->name('checkout.post-login');
 
-	Route::group(['middleware' => 'checkout.login-step-done'], function () {
-		Route::get('checkout/address', [CheckoutController::class, 'address'])->name('checkout.address');
-		Route::post('checkout/address', [CheckoutController::class, 'postAddress'])->name('checkout.post-address');
+	$route->group(['middleware' => 'checkout.login-step-done'], function ($route) {
+		$route->get('checkout/address', [CheckoutController::class, 'address'])->name('checkout.address');
+		$route->post('checkout/address', [CheckoutController::class, 'postAddress'])->name('checkout.post-address');
 
-		Route::group(['middleware' => 'checkout.address-step-done'], function () {
-			Route::get('checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
-			Route::post('checkout/payment', [CheckoutController::class, 'postPayment'])->name('checkout.post-payment');
+		$route->group(['middleware' => 'checkout.address-step-done'], function ($route) {
+			$route->get('checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
+			$route->post('checkout/payment', [CheckoutController::class, 'postPayment'])->name('checkout.post-payment');
 		});
 	});
 });
@@ -55,5 +56,7 @@ Route::group(['middleware' => 'auth'], function ($route) {
 			->except(['show']);
 		$route->resource('products', ProductsController::class, ['names' => 'products'])
 			->except(['show']);
+		$route->resource('orders', OrdersController::class, ['names' => 'orders'])
+			->only(['index', 'edit', 'update']);
 	});
 });

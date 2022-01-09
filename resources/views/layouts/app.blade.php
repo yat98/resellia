@@ -50,6 +50,10 @@
                                             <i class="fas fa-gift"></i>
                                             Products
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('orders.index') }}">
+                                            <i class="fas fa-shopping-cart"></i>
+                                            Orders
+                                        </a>
                                     </div>
                                 </li>
                             @endcan
