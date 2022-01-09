@@ -5,10 +5,10 @@
         <div class="row">
             <div class="col-md-12">
                 {{ Form::open(['route' => 'orders.index', 'method' => 'GET', 'class' => 'row my-4']) }}
-                <div class="col-8">
+                <div class="col-10">
                     <div class="row">
                         <div class="col-6 m-0 p-0 pr-2">
-                            {{ Form::text('q', request()->q, ['id' => 'q', 'class' => 'form-control ' . ($errors->has('q') ? 'is-invalid' : ''), 'placeholder' => 'Type Order ID...']) }}
+                            {{ Form::text('q', request()->q, ['id' => 'q', 'class' => 'form-control ' . ($errors->has('q') ? 'is-invalid' : ''), 'placeholder' => 'Type Order ID or customer name...']) }}
                             {!! $errors->first('q', '<div id="q" class="invalid-feedback">:message</div>') !!}
                         </div>
                         <div class="col-6 m-0 p-0 pr-2">
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4 m-0 p-0">
+                <div class="col-2 m-0 p-0">
                     <button type="submit" class="btn btn-primary">
                         Cari
                     </button>

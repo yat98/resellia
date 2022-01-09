@@ -12,7 +12,12 @@ class OrdersController extends Controller
 		$status = $request->status;
 		$q = $request->q;
 		$orders = Order::where('status', 'like', "%{$status}%")
-			->where('id', 'like', "%{$q}%")
+			->where(function ($query) use ($q) {
+				$query->where('id', "{$q}")
+					->orwhereHas('user', function ($query) use ($q) {
+						$query->where('name', 'like', "%{$q}%");
+					});
+			})
 			->paginate(10);
 		$statusList = Order::statusList();
 		if ($request->has('status')) {
